@@ -23,14 +23,22 @@ public class MainController {
 
     public String extractCookie(HttpServletRequest req) {
         String userAgent = req.getHeader("User-Agent");
-        logger.info("Received a request with User-Agent: " + userAgent);
+        if (userAgent != null) {
+            logger.info("Received a request with User-Agent: " + userAgent);
+	}
 
         String apiVersion = req.getHeader("X-Api-Version");
+        if (apiVersion != null) {
+            logger.info("Received a request with User-Agent: " + apiVersion);
+	}
         logger.info("Received a request for API version: " + apiVersion);
 
-        for (Cookie c : req.getCookies()) {
-            logger.info("Received a request with Cookie: " + c.getValue());
-        }
+	Cookie[] cookies = req.getCookies();
+	if (cookies != null) {
+            for (Cookie c : cookies) {
+                logger.info("Received a request with Cookie: " + c.getValue());
+            }
+	}
 
     return "Cookie Exploited";
 }
